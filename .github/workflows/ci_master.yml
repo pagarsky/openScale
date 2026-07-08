@@ -39,14 +39,11 @@ jobs:
         run: ./gradlew compileDebugAndroidTestKotlin
       - name: Build APK
         run: ./gradlew assembleDebug
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "dev-build"
-          prerelease: true
-          title: "openScale development build"
-          files: |
-            android_app/app/build/outputs/apk/debug/openScale-debug.apk
+          name: openScale-debug-apk
+          path: android_app/app/build/outputs/apk/debug/openScale-debug.apk
 
   # Keep the `weblate` branch (Weblate's push target) in sync with master so
   # Weblate's rebased translation pushes stay fast-forward and don't fail.
